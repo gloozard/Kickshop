@@ -5,13 +5,10 @@ class Config:
 class DevelopmentConfig:
     MYSQL_HOST  = "localhost"
     MYSQL_USER  = "root"
-    MSQL_PASSWORD   = ""
+    MSQL_PASSWORD   = "mysql"
     MYSQL_DB    = "kickshop"
 
-diccionario ={
-    "MYSQL_HOST"  : "localhost",
-    "MYSQL_USER"  : "root",
-    "MSQL_PASSWORD"   : "",
-    "MYSQL_DB"    : "kickshop"}
-
-print(diccionario["MYSQL_DB"])
+config = {
+    "development":DevelopmentConfig
+    
+}

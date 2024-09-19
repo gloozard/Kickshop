@@ -38,14 +38,18 @@
 
 
 <div class="container">
-  <form class="row g-3">
+  <form method="ppost" action="/sig" class="row g-3">
+    <div class="col-md-6">
+      <label for="inputEmail4" class="form-label">Name</label>
+      <input type="email" class="form-control" id="inputName" name="nombre">
+    </div>
     <div class="col-md-6">
       <label for="inputEmail4" class="form-label">Email</label>
-      <input type="email" class="form-control" id="inputEmail4">
+      <input type="email" class="form-control" id="inputEmail4" name="correo">
     </div>
     <div class="col-md-6">
       <label for="inputPassword4" class="form-label">Password</label>
-      <input type="password" class="form-control" id="inputPassword4">
+      <input type="password" class="form-control" id="inputPassword4" name="clave">
     </div>
     <div class="col-12">
       <label for="inputAddress" class="form-label">Address</label>
