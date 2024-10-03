@@ -3,6 +3,9 @@ from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash
 from datetime import datetime 
 from config import config
+from models.ModelUser import ModelUser
+from models.entities.User import User
+
 
 kickshop = Flask(__name__)
 db      = MySQL(kickshop)
