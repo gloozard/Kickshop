@@ -1,4 +1,5 @@
 from flask import Flask, render_template,url_for,request,redirect
+from flask_login import LoginManager, logout_user,login_user
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash
 from datetime import datetime 
@@ -9,6 +10,11 @@ from models.entities.User import User
 
 kickshop = Flask(__name__)
 db      = MySQL(kickshop)
+adminSesion = LoginManager(kickshop)
+
+@adminSesion.user_loader
+def cargarUsuario(id):
+    return ModelUser.get_by_id(db,id)
 
 @kickshop.route("/")
 def home():
@@ -32,9 +38,32 @@ def signup():
 
 
 
-@kickshop.route("/signin")
+@kickshop.route("/signin", methods =["GET","POST"])
 def signin():
-    return render_template('signin.html')
+    if request.method == "POST":
+        usuario= User(0,None,request.form["correo"],request.form["clave"],None,None)
+        usuarioAutentificado = ModelUser.signin(db,usuario)
+        if usuarioAutentificado is not None:
+            login_user(usuarioAutentificado)
+         
+            if usuarioAutentificado.clave:   
+                if usuarioAutentificado.perfil=="A":
+                    return render_template("admin.html")
+                else:
+                    return render_template ("user.html")
+            else: 
+                 return "Contraseña incorrecta"
+        else:
+            return "Usuario Incorrecto"
+    
+                 
+    else:
+        return render_template('signin.html')
+
+@kickshop.route("/signout",methods=["GET","POST"])
+def signout():
+    logout_user()
+    return render_template("home.html")
 
 if __name__ == '__main__':
    kickshop.config.from_object(config["development"])

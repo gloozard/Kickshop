@@ -1,10 +1,11 @@
 from models.entities.User import User
 
-class ModelUser:
+class ModelUser: 
+    @classmethod
     def signin(self,db,usuario):
         try:
            selUsuario= db.connection.cursor()
-           selUsuario.execute("SELECT * FROM usuario WHERE correo = %s", (usuario.correo)) 
+           selUsuario.execute("SELECT * FROM usuario WHERE correo = %s", (usuario.correo,)) 
            u = selUsuario.fetchone()
            
            if u is not None:
@@ -14,11 +15,13 @@ class ModelUser:
         except Exception as ex:
             print(ex)
             raise Exception(ex)
-    
+        
+        
+    @classmethod
     def get_by_id(self,db,id):
         try:
             selfUsuario =db.connection.cursor()
-            selfUsuario.execute("SELECT * FROM usuario WHERE id = %s",(id))
+            selfUsuario.execute("SELECT * FROM usuario WHERE id = %s",(id,))
             u = selfUsuario.fetchone()
             if u is None:
                 return User(u[0],u[1],u[2],u[3],u[4],u[5])    
