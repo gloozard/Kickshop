@@ -46,4 +46,40 @@
     </div>
   </nav>
 
+<div class="container">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Fecha de registro</th>
+        <th scope="col">Perfil</th>
+        <th scope="col"colspan ="2">&nbsp;</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+        {%for u in usuarios%}
+        
+      <tr>
+        <td scope="col">{{u.0}}</td>
+        <td scope="col">{{u.1}}</td>
+        <td scope="col">{{u.2}}</td>
+        <td scope="col">{{u.4}}</td>
+        <td scope="col">{{u.5}}</td>
+        <td scope="col">&nbsp;</td>
+        <td scope="col">&nbsp;</td>
+
+        <td scope="col">&nbsp;</td>
+
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
 {% endblock %}

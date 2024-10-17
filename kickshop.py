@@ -38,6 +38,15 @@ def signup():
 
 
 
+@kickshop.route("/sUsuario", methods =["GET","POST"])
+def sUsuario():
+    selUsuario=db.connection.cursor()
+    selUsuario.execute("SELECT * FROM usuario")
+    u = selUsuario.fetchall()
+    selUsuario.close()
+    return render_template("usuarios.html", usuarios = u)
+
+
 @kickshop.route("/signin", methods =["GET","POST"])
 def signin():
     if request.method == "POST":
