@@ -1,4 +1,4 @@
-from flask import Flask, render_template,url_for,request,redirect
+from flask import Flask, render_template,url_for,request,redirect, flash
 from flask_login import LoginManager, logout_user,login_user
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash
@@ -61,13 +61,59 @@ def signin():
                 else:
                     return render_template ("user.html")
             else: 
-                 return "Contraseña incorrecta"
+                flash("Contraseña incorrecta")
+                return redirect(request.url)
+
         else:
-            return "Usuario Incorrecto"
+            flash ("usuario inexistente")
+            return redirect(request.url)
     
                  
     else:
         return render_template('signin.html')
+
+
+@kickshop.route("/iUsuario",methods=["GET","POST"])
+def iUsuario():
+    nombre=request.form["nombre"]
+    correo=request.form["correo"]
+    clave=request.form["clave"]
+    claveCifrada = generate_password_hash(clave)
+    fechareg=datetime.now()
+    perfil=request.form["perfil"]
+    
+
+    crearUsuario =db.connection.cursor()
+    crearUsuario.execute("INSERT INTO usuario (nombre,correo,clave,fechareg,perfil) VALUES (%s,%s,%s,%s,%s)",(nombre,correo,claveCifrada,fechareg,perfil))
+    db.connection.commit()
+    flash("Usuario creado")
+    return redirect("/sUsuario")
+
+@kickshop.route("/uUsuario/<int:id>",methods=["GET","POST"])
+def uUsuario(id):
+    nombre=request.form["nombre"]
+    correo=request.form["correo"]
+    clave=request.form["clave"]
+    claveCifrada = generate_password_hash(clave)
+    fechareg=datetime.now()
+    perfil=request.form["perfil"]
+    
+
+    editarUsuario =db.connection.cursor()
+    editarUsuario.execute("UPDATE usuario SET nombre=%s,correo=%s,clave=%s,fechareg=%s,perfil=%s WHERE id=%s",(nombre,correo,claveCifrada,fechareg,perfil,id))
+    db.connection.commit()
+    flash("Usuario Editado")
+    return redirect("/sUsuario")
+
+
+@kickshop.route("/dUsuario/<int:id>",methods=["GET","POST"])
+def dUsuario(id):
+
+    eliminarUsuario =db.connection.cursor()
+    eliminarUsuario.execute("DELETE FROM usuario WHERE id=%s",(id,))
+    db.connection.commit()
+    flash("Usuario Eliminado")
+    return redirect("/sUsuario")
 
 @kickshop.route("/signout",methods=["GET","POST"])
 def signout():

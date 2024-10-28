@@ -36,6 +36,18 @@
   </div>
 </nav>
 <div class="container">
+  {% with mensajes = get_flashed_messages()%}
+  {%if mensajes%}
+  {%for m in mensajes%}
+  
+<div class="alert alert-danger" role= "alert">
+{{m}}
+</div>
+  {% endfor %}
+  
+  {% endif %}
+
+  {%endwith%}
   <form action="/signin" method="post" class="row g-3">
     <div class="col-md-6">
       <label for="inputEmail4" class="form-label">Email</label>

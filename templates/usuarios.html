@@ -1,18 +1,16 @@
 {% extends 'layout.html' %}
-{% block titulo %} {% endblock %}
+{% block titulo %}
+
+{% endblock %}
 {% block contenido %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
         <i class="fa-solid fa-carrot fa-bounce fa-xl" style="color: #181816;"></i>
         Kickshop
-  
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -25,20 +23,24 @@
             <a class="nav-link" href="#">Pricing</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" >{{current_user.nombre}}</a>
+            <a class="nav-link">{{ current_user.nombre }}</a>
           </li>
-  
+
           <li class="nav-item">
             <a class="nav-link" href="/signout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
           </li>
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Operaciones
-            </button>
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Operaciones</button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/sUsuario">Usuario</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li>
+                <a class="dropdown-item" href="/sUsuario">Usuario</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
             </ul>
           </div>
         </ul>
@@ -46,40 +48,146 @@
     </div>
   </nav>
 
-<div class="container">
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Fecha de registro</th>
+          <th scope="col">Perfil</th>
+          <th scope="col" colspan="2">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insert"><i class="fa-solid fa-user-plus"></i></button>
+          </th>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Correo</th>
-        <th scope="col">Fecha de registro</th>
-        <th scope="col">Perfil</th>
-        <th scope="col"colspan ="2">&nbsp;</th>
+          <!-- Modal insert -->
+          <div class="modal fade" id="insert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/iUsuario" method="post">
+                  <div class="modal-body">
+                    <label for="inputEmail4" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="inputName" name="nombre" />
+                  </div>
+                  <div class="modal-body">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" name="correo" />
+                  </div>
+                  <div class="modal-body">
+                    <label for="inputPassword4" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="inputPassword4" name="clave" />
+                  </div>
 
+                  <label for="inputPassword4" class="modal-body">Perfil</label>
+                  <select name="perfil" class="form-select" aria-label="Default select example">
+                    <option selected>Seleeciona un perfil</option>
+                    <option value="A">Administrador</option>
+                    <option value="U">Usuario</option>
+                  </select>
 
-      </tr>
-    </thead>
-    <tbody>
-        {%for u in usuarios%}
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in usuarios %}
+          <tr>
+            <td scope="col">{{ u.0 }}</td>
+            <td scope="col">{{ u.1 }}</td>
+            <td scope="col">{{ u.2 }}</td>
+            <td scope="col">{{ u.4 }}</td>
+            <td scope="col">{{ u.5 }}</td>
+            <td scope="col">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update{{ u.0 }}"><i class="fa-solid fa-pen-to-square"></i></button>
+            </td>
+
+            <td scope="col">
+                  <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete{{u.0}}"><i class="fa-solid fa-trash"></i></button>
         
-      <tr>
-        <td scope="col">{{u.0}}</td>
-        <td scope="col">{{u.1}}</td>
-        <td scope="col">{{u.2}}</td>
-        <td scope="col">{{u.4}}</td>
-        <td scope="col">{{u.5}}</td>
-        <td scope="col">&nbsp;</td>
-        <td scope="col">&nbsp;</td>
 
-        <td scope="col">&nbsp;</td>
+            </td>
+          </tr>
+          <!-- Modal update -->
+          <div class="modal fade" id="update{{u.0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Editar usuario</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/uUsuario/{{u.0}}" method="post">
+                  <div class="modal-body">
+                    <label for="inputEmail4" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="inputName" name="nombre" value="{{u.1}}"/>
+                  </div>
+                  <div class="modal-body">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" name="correo" value="{{u.2}}" />
+                  </div>
+                  <div class="modal-body">
+                    <label for="inputPassword4" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="inputPassword4" name="clave" />
+                  </div>
+
+                  <label for="inputPassword4" class="modal-body">Perfil</label>
+                  <select name="perfil" class="form-select" aria-label="Default select example">
+                    <option >Seleeciona un perfil</option>
+                    <option {%if u.5 == "A" %} selected {% endif %} value="A">Administrador</option>
+                    <option{%if u.5 == "U" %} selected {% endif %} value="U">Usuario</option>
+                  </select>
+                  
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Editar</button>
+                  </div>
+                  
+                </form>
+              </div>
+            </div>
+          </div>
 
 
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+          <!-- Modal delete -->
+          <div class="modal fade" id="delete{{u.0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar usuario</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form action="/dUsuario/{{u.0}}" >
 
+                    <p><i class="fa-solid fa-triangle-exclamation" style="color: #bd0042;"></i> Seguro que quieres eliminar al usuario {{u.1}}?</p>
+                </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                  </div>
+                  
+                </form>
+              </div>
+            </div>
+          </div>
+          
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
