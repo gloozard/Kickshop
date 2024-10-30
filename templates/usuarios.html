@@ -49,6 +49,14 @@
   </nav>
 
   <div class="container">
+    {% with mensajes=get_flashed_messages() %}
+      {% if mensajes %}
+        {% for m in mensajes %}
+          <div class="alert alert-info" role="alert">{{ m }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}  <div class="container">
+
     <table class="table">
       <thead>
         <tr>
