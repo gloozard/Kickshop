@@ -1,4 +1,4 @@
-from flask import Flask, render_template,url_for,request,redirect, flash
+from flask import Flask, render_template,url_for,request,redirect, flash, session
 from flask_login import LoginManager, logout_user,login_user
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash
@@ -18,6 +18,7 @@ def cargarUsuario(id):
 
 @kickshop.route("/")
 def home():
+
     return render_template('home.html')
 
 @kickshop.route("/signup",methods=["GET","POST"])
@@ -54,6 +55,8 @@ def signin():
         usuarioAutentificado = ModelUser.signin(db,usuario)
         if usuarioAutentificado is not None:
             login_user(usuarioAutentificado)
+            session["NombreU"] = usuarioAutentificado.nombre
+            session["PerfilU"]= usuarioAutentificado.perfil
          
             if usuarioAutentificado.clave:   
                 if usuarioAutentificado.perfil=="A":
@@ -119,6 +122,16 @@ def dUsuario(id):
 def signout():
     logout_user()
     return render_template("home.html")
+
+@kickshop.route("/sProductos",methods=["GET","POST"])
+def sProyecto():
+    selProducto = db.connection.cursor()
+    selProducto.execute("SELECT * FROM productos")
+    p = selProducto.fetchall()
+    selProducto.close()
+    return render_template("productos.html", pyoyectos = p)    
+
+
 
 if __name__ == '__main__':
    kickshop.config.from_object(config["development"])
