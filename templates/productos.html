@@ -1,75 +1,184 @@
-{% extends 'layout.html' %}
-{% block titulo %} Administrador{% endblock %}
+{% extends  'layout.html' %}
+{% block titulo %} Productos {% endblock %}
 {% block contenido %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <i class="fa-solid fa-carrot fa-bounce fa-xl" style="color: #181816;"></i>
+      Kickshop
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">
-        <i class="fa-solid fa-carrot fa-bounce fa-xl" style="color: #181816;"></i>
-        Kickshop
-  
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" >{{current_user.nombre}}</a>
-          </li>
-  
-          <li class="nav-item">
-            <a class="nav-link" href="/signout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-          </li>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Operaciones
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/sUsuario">Usuario</a></li>
-              <li><a class="dropdown-item" href="/sProducto">Productos</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">{{ current_user.nombre }}</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/signout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        </li>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Operaciones</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="/sUsuario">Usuario</a>
+            </li>
+            <li><a class="dropdown-item" href="/sProducto">Productos</a></li>
+
+            <li>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+          </ul>
+        </div>
+      </ul>
     </div>
-  </nav>
-
+  </div>
+</nav>
 <div class="container">
-
-  {% with mensajes=get_flashed_messages() %}
+  {% with mensajes = get_flashed_messages() %}
   {% if mensajes %}
-    {% for m in mensajes %}
-      <div class="alert alert-success" role="alert">{{ m }}</div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for i in productos %}
+  {% for m in mensajes %}
+   <div class="alert alert-success d-flex align-items-center" role="alert"> 
+    <i class="fa-solid fa-exclamation fa-beat fa-2xl" style="color: #410606;"></i>
+    <div>
+      {{m}}
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %} 
+  {% endwith %}
+  <!-- Button insert -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insert">
+  <i class="fa-solid fa-plus fa-2xl" style="color: #000000;"></i>
+</button>
+<!-- Modal insert -->
+<div class="modal fade" id="insert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Agrega un producto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/iProducto" method="post">
+      <div class="modal-body">
+        <div class="col-md-6">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" name="nombre" class="form-control" id="nombre">
+        </div>
+
+          <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Precio</label>
+            <input type="text" name="precio" class="form-control" id="inputEmail4">
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Existencia</label>
+            <input type="text" name="existencia" class="form-control" id="inputEmail4">
+          </div>          
+          <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Imagen</label>
+            <input type="text" name="imagen" class="form-control" id="inputPassword4">
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+  <div class="row row-cols-1 row-cols-md-3 g-4"> 
+    {% for p  in productos %}
     <div class="col">
-      <div class="card">
-        <img src="/static/img/{{p.7}}" class="card-img-top" alt="...">
+      <div class="card cardp-class">
+        <center><img src="/static/img/{{p.4}}" height="150" class="card-img-top1" alt="no se encontro :c"></center>
         <div class="card-body">
           <h5 class="card-title">{{p.1}}</h5>
           <p class="card-text">{{p.2}}</p>
+          <p class="card-text">{{p.3}}</p>
+            <!-- Button update -->
+<button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#update{{p.0}}">
+  <i class="fa-solid fa-pencil fa-xl" style="color: #000000;"></i>
+</button>
+ <!-- Button delete -->
+<button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#delete{{p.0}}">
+  <i class="fa-solid fa-trash" style="color: #000000;"></i>
+</button>
+
+<!-- Modal update -->
+ <div class="modal fade" id="update{{p.0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Producto Nuevo</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/uProducto/{{p.0}}" method="post">
+                    <div class="modal-body">
+                      <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" name="nombre" value="{{p.1}}" class="form-control" id="nombre">
+                      </div>
+                        <div class="col-md-6">
+                          <label for="inputEmail4" class="form-label">Precio</label>
+                          <input type="text" name="precio" value="{{p.2}}" class="form-control" id="inputEmail4">
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="inputEmail4" class="form-label">Existencias</label>
+                          <input type="text" name="existencias" value="{{p.3}}" class="form-control" id="inputEmail4">
+                        </div>    
+                        <div class="col-md-6">
+                          <label for="inputPassword4" class="form-label">Imagen</label>
+                          <input type="text" name="imagen" value="{{p.4}}" class="form-control" id="inputPassword4">
+                        </div>
+                        
+                      </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+ </div>
+
+<!-- Modal delete -->
+<div class="modal fade" id="delete{{p.0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/dProducto/{{p.0}}">
+      <div class="modal-body">
+        <p><i class="fa-solid fa-triangle-exclamation fa-2xl" style="color: #bf2222;"></i>¿Deseas Eliminar Este Producto {{p.1}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-danger">Eliminar Producto</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+            
         </div>
       </div>
     </div>
     {% endfor %}
   </div>
 </div>
-
-
-  {% endblock %}
+{% endblock %}

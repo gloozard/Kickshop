@@ -1,6 +1,7 @@
 from flask import Flask, render_template,url_for,request,redirect, flash, session
 from flask_login import LoginManager, logout_user,login_user
 from flask_mysqldb import MySQL
+from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash
 from datetime import datetime 
 from config import config
@@ -10,6 +11,12 @@ from models.entities.User import User
 
 kickshop = Flask(__name__)
 db      = MySQL(kickshop)
+#PITON EN TODOS LADOS
+kickshop.config.from_object(config["development"])
+kickshop.config.from_object(config["mail"])
+
+mail = Mail(kickshop)
+
 adminSesion = LoginManager(kickshop)
 
 @adminSesion.user_loader
@@ -32,6 +39,9 @@ def signup():
         reg_usuario=db.connection.cursor()
         reg_usuario.execute("INSERT INTO usuario(nombre,correo,clave,fechareg)  VALUES(%s,%s,%s,%s) ",(nombre,correo,clave_cifrada,fechareg))
         db.connection.commit()  
+        msg = Message(subject="Bienvenido a mi app",recipients=[correo])
+        msg.html = render_template("mail.html", nombre=nombre)
+        mail.send
         return render_template('home.html')
     else:
         
@@ -123,13 +133,13 @@ def signout():
     logout_user()
     return render_template("home.html")
 
-@kickshop.route("/sProductos",methods=["GET","POST"])
-def sProyecto():
+@kickshop   .route('/sProducto', methods=['GET','POST'])
+def sProducto():
     selProducto = db.connection.cursor()
-    selProducto.execute("SELECT * FROM productos")
+    selProducto.execute("SELECT * FROM producto")
     p = selProducto.fetchall()
     selProducto.close()
-    return render_template("productos.html", pyoyectos = p)    
+    return render_template('productos.html', productos = p)  
 
 
 
