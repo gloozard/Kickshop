@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 04:25:29
+-- Tiempo de generación: 24-11-2024 a las 06:36:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `force4x4`
+-- Base de datos: `kickshop`
 --
 
 -- --------------------------------------------------------
@@ -72,29 +72,26 @@ CREATE TABLE `personalizaciones` (
 CREATE TABLE `producto` (
   `idproducto` int(8) NOT NULL,
   `nombre` text NOT NULL,
-  `descripcion` text NOT NULL,
   `precio` float NOT NULL,
-  `categoria` text NOT NULL,
   `existencia` int(4) NOT NULL,
-  `fechaagregado` datetime NOT NULL,
-  `Imagen` varchar(250) NOT NULL
+  `imagen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`idproducto`, `nombre`, `descripcion`, `precio`, `categoria`, `existencia`, `fechaagregado`, `Imagen`) VALUES
-(1, 'Llantas', 'llanta grandes o mas chicas ', 2500, 'automovil', 100, '2024-10-31 00:00:00', 'Llantas.webp'),
-(2, 'Rines', 'rines de todo tipo', 12000, 'automovil', 40, '2024-11-01 00:00:00', 'Rines.webp'),
-(3, 'Pintura', 'pintura a tu gusto', 3000, 'automovil', 99, '2024-11-02 00:00:00', 'Pintura.webp'),
-(4, 'Filtro alto Flujo', 'pa que luzca chido', 1350, 'automovil', 24, '2024-11-03 00:00:00', 'Filtro alto flujo.jpg'),
-(5, 'Escape', 'pa que se oiga perron', 2000, 'automovil', 65, '2024-11-04 00:00:00', 'Escape.webp'),
-(6, 'Suspension', 'para andar comodo ', 4099, 'automovil', 87, '2024-11-05 00:00:00', 'Suspencion.jpg'),
-(7, 'Frenos', 'frenos mejorados para mayor seguridad', 2350, 'automovil', 154, '2024-11-06 00:00:00', 'Frenos.jpg'),
-(8, 'Faros ', 'fraros a tu gusto led o de algun clor', 500, 'automovil', 300, '2024-11-07 00:00:00', 'Faros.jpg'),
-(9, 'Vinil', 'vinil de tu preferencia ', 999, 'automovil', 24, '2024-11-08 00:00:00', 'Vinil.jpg'),
-(10, 'Tapizado', 'tapizado de interiores a tu gusto', 2500, 'automovil', 56, '2024-11-09 00:00:00', 'Tapizado.jpg');
+INSERT INTO `producto` (`idproducto`, `nombre`, `precio`, `existencia`, `imagen`) VALUES
+(1, 'limon', 20, 30, 'limon.jpg'),
+(2, 'manzana', 30, 20, 'manzana.jpg\r\n'),
+(3, 'pera', 35, 8, 'pera.jpg'),
+(4, 'uvas', 70, 10, 'uva.jpg\r\n'),
+(5, 'cerezas', 15, 15, 'cereza.jpg'),
+(6, 'platano', 20, 20, 'platano.jpg'),
+(7, 'pepino', 23, 6, 'pepino.jpg'),
+(8, 'cebolla', 13, 4, 'cebolla.jpg'),
+(9, 'tomate', 17, 8, 'tomate.jpg'),
+(10, 'ajo', 6, 9, 'ajo.jpg');
 
 -- --------------------------------------------------------
 
@@ -120,7 +117,9 @@ INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `fechareg`, `perfil`) 
 (8, 'manuel lara ruvalcaba', 'manuales741@gmail.com', 'scrypt:32768:8:1$uX8bEhpCnXmAcJxM$b93b7b2b341463c3c69d0118251f1ceb024cb9015e6f2b5212281292c41f0c5532a709ccfdf24a292ddedf38f02d8fbb0cf1f4d61719fe2544d56e0d8639213d', '2024-10-16 12:23:39', 'U'),
 (10, 'kick', 'holadd@gmail.com', 'scrypt:32768:8:1$xXdVFjFm6XGxS3Dr$af9319897fcb523db32ea0946ac44602f169c8a48d9cd940d55d6cc13167b2bfce1d3b6d56027cfb69327c2b8055811d3f6b04d0dd33103dd49253a2d06f6cf5', '2024-10-17 11:15:27', 'A'),
 (13, 'tonto', 'tonto@gmail.com', 'scrypt:32768:8:1$C7OKtdgY4JTq2bFq$c934b025ea8f54ca3b6b53e76f16b900186b67ae2ab309f6bc2cbb6485802b28954470975d3fabf5c58282b8ee9c1736cda31c0e813dac2204286b11949fa918', '2024-10-24 09:42:11', 'U'),
-(15, 'manuel', 'maguatss123@gmail.com', 'scrypt:32768:8:1$mYhqhVGpdUfgTIva$7115a9af5baee52eb96a25fdc564d5e38295fe0a3d4e5c2a01d7fa8451f9e37046b1c69105db2fcfba1a95dd79a2d626b9cbecefd7ef34f22e0b728279699404', '2024-11-20 19:21:15', 'U');
+(15, 'manuel', 'maguatss123@gmail.com', 'scrypt:32768:8:1$mYhqhVGpdUfgTIva$7115a9af5baee52eb96a25fdc564d5e38295fe0a3d4e5c2a01d7fa8451f9e37046b1c69105db2fcfba1a95dd79a2d626b9cbecefd7ef34f22e0b728279699404', '2024-11-20 19:21:15', 'U'),
+(16, 'Emilano Ali Kick Ramirez', 'kickemiliano@gmail.com', 'scrypt:32768:8:1$T6DLWmwKoL2UcG7c$03a5f67ddd91bddd63e407e084f3fa3eb5d0cc94460dcb0ba29e8ed445f81b1b57b880ee2a486162b9e00245e870c6619cd8894f31e1181d179e872a1e973beb', '2024-11-23 21:50:33', 'A'),
+(17, 'a', 'ADADGASF@FASDASD.COM', 'scrypt:32768:8:1$fcrMz27FV6IVzIsb$91350a058adb08c1fb8cae4d4faee60eb82d2b84dd838c77175554c068ff03a1785aa4ec0efa103fb4075492f65955ab06ef2fc28fd9b0777e8b1a3b406eedda', '2024-11-23 23:05:59', 'U');
 
 --
 -- Índices para tablas volcadas
@@ -169,7 +168,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restricciones para tablas volcadas
