@@ -3,16 +3,16 @@ class Config:
     DEBUG = True
     
 class DevelopmentConfig(Config):
-    MYSQL_HOST  = "localhost"
+    """MYSQL_HOST  = "localhost"
     MYSQL_USER  = "root"
     MSQL_PASSWORD   = "mysql"
-    MYSQL_DB    = "kickshop"
+    MYSQL_DB    = "kickshop"""
     #PITON EN TODOS LADOS 
     
-    """ MYSQL_HOST  = "kickshop.mysql.pythonanywhere-services.com"
+    MYSQL_HOST  = "kickshop.mysql.pythonanywhere-services.com"
     MYSQL_USER  = "root"
     MSQL_PASSWORD   = "emiliano123"
-    MYSQL_DB    = "kickshop$kickshop"""
+    MYSQL_DB    = "kickshop$kickshop"
 class MailConfig(Config):
     MAIL_SERVER         = "smtp.gmail.com"
     MAIL_PORT = 587
